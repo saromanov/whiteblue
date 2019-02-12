@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Pitstop.CustomerManagementAPI.DataAccess;
-using Pitstop.CustomerManagementAPI.Model;
+using WhileBlue.Users.Model;
 using AutoMapper;
 using Pitstop.Infrastructure.Messaging;
 using Pitstop.CustomerManagementAPI.Events;
