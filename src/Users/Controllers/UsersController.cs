@@ -31,14 +31,14 @@ namespace WhileBlue.Application.Users.Controllers
 
         [HttpGet]
         [Route("{userId}", Name = "GetUserById")]
-        public async Task<IActionResult> GetUserById(string customerId)
+        public async Task<IActionResult> GetUserById(string userId)
         {
-            var customer = await _dbContext.Customers.FirstOrDefaultAsync(c => c.CustomerId == customerId);
-            if (customer == null)
+            var user = await _dbContext.Users.FirstOrDefaultAsync(c => c.Id == userId);
+            if (user == null)
             {
                 return NotFound();
             }
-            return Ok(customer);
+            return Ok(user);
         }
 
         [HttpPost]
@@ -57,15 +57,13 @@ namespace WhileBlue.Application.Users.Controllers
                     await _messagePublisher.PublishMessageAsync(e.MessageType, e , "");
 
                     // return result
-                    return CreatedAtRoute("GetByCustomerId", new { customerId = customer.CustomerId }, customer);
+                    return CreatedAtRoute("GetUserById", new { customerId = user.Id }, customer);
                 }
                 return BadRequest();
             }
             catch (DbUpdateException)
             {
-                ModelState.AddModelError("", "Unable to save changes. " +
-                    "Try again, and if the problem persists " +
-                    "see your system administrator.");
+                ModelState.AddModelError("", "Unable to save user.");
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
